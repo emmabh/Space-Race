@@ -9,8 +9,7 @@
 #include <iostream>
 using namespace std;
 
-Astronaut::Astronaut():Person('A')
-{
+Astronaut::Astronaut():Person('A'){
 	amount_moonstones = 0;
 	amount_oxygen = 50;
 	depot = NULL;
@@ -19,8 +18,7 @@ Astronaut::Astronaut():Person('A')
 	cout << "Astronaut default constructed." << endl;
 }
 
-Astronaut::Astronaut(int in_id, Cart_Point in_loc):Person(in_loc, in_id, 'A')
-{
+Astronaut::Astronaut(int in_id, Cart_Point in_loc):Person(in_loc, in_id, 'A'){
 	amount_moonstones = 0;
 	amount_oxygen = 20;
 	depot = NULL;
@@ -29,12 +27,12 @@ Astronaut::Astronaut(int in_id, Cart_Point in_loc):Person(in_loc, in_id, 'A')
 	cout << "Astronaut constructed." << endl;
 }
 
-bool Astronaut::update()
-{
+bool Astronaut::update(){
 
 	switch(state){
 		case 's': {return false;
-					break;}
+					break;
+		}
 		case 'm': {
 					if(amount_oxygen == 0){
 						this->state = 'l';
@@ -48,7 +46,8 @@ bool Astronaut::update()
 						amount_moonstones++;
 						return false;
 					}
-					break;}
+					break;
+		}
 		case 'o': {
 					if(amount_oxygen == 0){
 						this->state = 'l';
@@ -63,7 +62,8 @@ bool Astronaut::update()
 						return false;
 					}
 				
-					break;}
+					break;
+		}
 		case 'g': {
 					//cout proper message, subtract oxygen from depot and add to astronaut
 					double amount_extracted = depot->extract_oxygen();
@@ -71,7 +71,8 @@ bool Astronaut::update()
 					this->state = 's';
 					this->amount_oxygen += amount_extracted; 
 					return true;
-					break;}
+					break;
+		}
 		case 'i': {
 					if(amount_oxygen == 0){
 						this->state = 'l';
@@ -85,13 +86,15 @@ bool Astronaut::update()
 						amount_oxygen--;
 						return false;
 					}
-					break;}
+					break;
+		}
 		case 'd': {cout << display_code << id_num << ": Deposit " << amount_moonstones << " moonstones." << endl;
 					home->deposit_moonstones(amount_moonstones);
 					this->amount_moonstones = 0;
 					this->state = 's';
 					return true;
-					break;}
+					break;
+		}
 		case 'l': {
 					if((location.x != destination.x) && (location.y != destination.y)){
 						if(update_location()){			
@@ -105,7 +108,8 @@ bool Astronaut::update()
 					}else{
 						return false;
 					}
-					break;}
+					break;
+		}
 	}
 
 }
@@ -156,24 +160,31 @@ void Astronaut::show_status()
 	Person::show_status();
 
 	switch (state){
-		case 's': 	cout << " with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
+		case 's':{	cout << " with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
 					break;
-		case 'm': 	cout << endl;
+		}
+		case 'm':{ 	cout << endl;
 					break;
-		case 'o': 	cout << " is outbound to a Depot with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
+		}
+		case 'o':{ 	cout << " is outbound to a Depot with " << amount_oxygen << " oxygen and " << amount_moonstones << " moon stones." << endl;
 					break;
-		case 'g': 	cout << " is getting oxygen from Depot." << endl;
+		}
+		case 'g':{ 	cout << " is getting oxygen from Depot." << endl;
 					break;
-		case 'i': 	cout << " is inbound to home with load: " << amount_moonstones << " and " << amount_oxygen << " oxygen." << endl;
+		}
+		case 'i':{ 	cout << " is inbound to home with load: " << amount_moonstones << " and " << amount_oxygen << " oxygen." << endl;
 					break;
-		case 'd': 	cout << " is depositing " << amount_moonstones << " moon stones." << endl;
+		}
+		case 'd':{ 	cout << " is depositing " << amount_moonstones << " moon stones." << endl;
 					break;
-		case 'l':	if (this->amount_oxygen == 0){
+		}
+		case 'l':{	if (this->amount_oxygen == 0){
 						cout << " . Out of oxygen." << endl;
 					}else{
 						cout << " at Space Station." << endl;
 					}
 					break;
+		}
 	}
 
 }
